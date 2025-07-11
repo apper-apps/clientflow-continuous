@@ -107,8 +107,8 @@ const [tasks, setTasks] = useState([]);
     return currentTime - new Date(timer.startTime).getTime();
   };
 
-  const filteredTasks = tasks.filter(task => {
-    const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase());
+const filteredTasks = tasks.filter(task => {
+    const matchesSearch = task.title?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesPriority = priorityFilter === "all" || task.priority === priorityFilter;
     const matchesStatus = statusFilter === "all" || task.status === statusFilter;
     return matchesSearch && matchesPriority && matchesStatus;
@@ -320,7 +320,7 @@ const getStatusIcon = (status) => {
                             {task.title}
                           </h3>
 <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Project ID: {task.project_id || 'N/A'}
+                            Project: {typeof task.project_id === 'object' ? task.project_id?.Name : task.project_id || 'N/A'}
                           </p>
                         </div>
                         

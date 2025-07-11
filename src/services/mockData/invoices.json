@@ -1,102 +1,102 @@
 [
   {
     "Id": 1,
-    "clientId": "1",
-    "projectId": "1",
+    "client_id": "1",
+    "project_id": "1",
     "amount": 25000,
     "status": "paid",
-    "dueDate": "2024-03-20T00:00:00Z",
-    "paymentDate": "2024-03-18T00:00:00Z"
+    "due_date": "2024-03-20T00:00:00Z",
+    "payment_date": "2024-03-18T00:00:00Z"
   },
   {
     "Id": 2,
-    "clientId": "2",
-    "projectId": "2",
+    "client_id": "2",
+    "project_id": "2",
     "amount": 15000,
     "status": "sent",
-    "dueDate": "2024-03-30T00:00:00Z"
+    "due_date": "2024-03-30T00:00:00Z"
   },
-{
+  {
     "Id": 3,
-    "clientId": "3",
-    "projectId": "3",
+    "client_id": "3",
+    "project_id": "3",
     "amount": 15000,
     "status": "paid",
-    "dueDate": "2024-04-05T00:00:00Z",
-    "paymentDate": "2024-04-03T00:00:00Z"
+    "due_date": "2024-04-05T00:00:00Z",
+    "payment_date": "2024-04-03T00:00:00Z"
   },
   {
     "Id": 4,
-    "clientId": "4",
-    "projectId": "4",
+    "client_id": "4",
+    "project_id": "4",
     "amount": 12000,
     "status": "sent",
-    "dueDate": "2024-04-10T00:00:00Z"
+    "due_date": "2024-04-10T00:00:00Z"
   },
   {
     "Id": 5,
-    "clientId": "6",
-    "projectId": "5",
+    "client_id": "6",
+    "project_id": "5",
     "amount": 8000,
     "status": "draft",
-    "dueDate": "2024-04-15T00:00:00Z"
+    "due_date": "2024-04-15T00:00:00Z"
   },
   {
     "Id": 6,
-    "clientId": "7",
-    "projectId": "6",
+    "client_id": "7",
+    "project_id": "6",
     "amount": 9000,
     "status": "overdue",
-    "dueDate": "2024-03-15T00:00:00Z"
+    "due_date": "2024-03-15T00:00:00Z"
   },
   {
     "Id": 7,
-    "clientId": "8",
-    "projectId": "7",
+    "client_id": "8",
+    "project_id": "7",
     "amount": 4000,
     "status": "draft",
-    "dueDate": "2024-04-20T00:00:00Z"
+    "due_date": "2024-04-20T00:00:00Z"
   },
   {
     "Id": 8,
-    "clientId": "10",
-    "projectId": "8",
+    "client_id": "10",
+    "project_id": "8",
     "amount": 6000,
     "status": "sent",
-    "dueDate": "2024-04-05T00:00:00Z"
+    "due_date": "2024-04-05T00:00:00Z"
   },
-{
+  {
     "Id": 9,
-    "clientId": "1",
-    "projectId": "1",
+    "client_id": "1",
+    "project_id": "1",
     "amount": 5000,
     "status": "paid",
-    "dueDate": "2024-02-28T00:00:00Z",
-    "paymentDate": "2024-02-26T00:00:00Z"
+    "due_date": "2024-02-28T00:00:00Z",
+    "payment_date": "2024-02-26T00:00:00Z"
   },
-{
+  {
     "Id": 10,
-    "clientId": "2",
-    "projectId": "2",
+    "client_id": "2",
+    "project_id": "2",
     "amount": 10000,
     "status": "paid",
-    "dueDate": "2024-03-10T00:00:00Z",
-    "paymentDate": "2024-03-08T00:00:00Z"
+    "due_date": "2024-03-10T00:00:00Z",
+    "payment_date": "2024-03-08T00:00:00Z"
   },
   {
     "Id": 11,
-    "clientId": "4",
-    "projectId": "4",
+    "client_id": "4",
+    "project_id": "4",
     "amount": 8000,
     "status": "overdue",
-    "dueDate": "2024-03-05T00:00:00Z"
+    "due_date": "2024-03-05T00:00:00Z"
   },
   {
     "Id": 12,
-    "clientId": "7",
-    "projectId": "6",
+    "client_id": "7",
+    "project_id": "6",
     "amount": 9000,
     "status": "sent",
-    "dueDate": "2024-04-12T00:00:00Z"
+    "due_date": "2024-04-12T00:00:00Z"
   }
 ]

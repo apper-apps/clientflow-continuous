@@ -45,7 +45,7 @@ const [statusFilter, setStatusFilter] = useState("all");
   }, []);
 
 const filteredInvoices = invoices.filter(invoice => {
-const matchesSearch = invoice.Id.toString().includes(searchTerm) ||
+    const matchesSearch = invoice.Id?.toString().includes(searchTerm) ||
                          invoice.amount?.toString().includes(searchTerm);
     const matchesStatus = statusFilter === "all" || invoice.status === statusFilter;
     return matchesSearch && matchesStatus;
@@ -294,10 +294,10 @@ return (
                     </Badge>
                   </div>
 <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Client ID: {invoice.client_id || 'N/A'}
+                    Client: {typeof invoice.client_id === 'object' ? invoice.client_id?.Name : invoice.client_id || 'N/A'}
                   </p>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Project ID: {invoice.project_id || 'N/A'}
+                    Project: {typeof invoice.project_id === 'object' ? invoice.project_id?.Name : invoice.project_id || 'N/A'}
                   </p>
                 </div>
               </div>
