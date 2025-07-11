@@ -343,20 +343,19 @@ const getStatusIcon = (status) => {
                         </div>
 </div>
                       
-                      <div className="flex items-center justify-between">
+<div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                           <div className="flex items-center gap-1">
-<span>Due: {new Date(task.due_date).toLocaleDateString()}</span>
+                            <span>Due: {new Date(task.due_date).toLocaleDateString()}</span>
                           </div>
-{new Date(task.due_date) < new Date() && task.status !== "done" && (
+                          {new Date(task.due_date) < new Date() && task.status !== "done" && (
                             <Badge variant="danger" className="text-xs">
                               Overdue
                             </Badge>
                           )}
                         </div>
-                        </div>
                         
-<div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
                           <Button 
                             variant="ghost" 
                             size="sm"
@@ -404,14 +403,14 @@ const getStatusIcon = (status) => {
                         >
                           <ApperIcon 
                             name={activeTimers.has(task.Id) ? "Square" : "Play"} 
-size={14} 
+                            size={14} 
                           />
                           {activeTimers.has(task.Id) ? "Stop" : "Start"}
-</Button>
+                        </Button>
                       </div>
                     </div>
                   </div>
-                </Card>
+</Card>
               </motion.div>
             ))}
           </motion.div>
