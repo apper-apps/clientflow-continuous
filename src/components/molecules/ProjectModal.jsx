@@ -13,14 +13,14 @@ const ProjectModal = ({
   project = null,
   title = "Create New Project"
 }) => {
-  const [formData, setFormData] = useState({
-    name: '',
+const [formData, setFormData] = useState({
+    Name: '',
     description: '',
-    clientId: '',
+    client_id: '',
     status: 'planning',
     budget: '',
-    startDate: '',
-    endDate: ''
+    start_date: '',
+    end_date: ''
   });
   
   const [clients, setClients] = useState([]);
@@ -37,25 +37,25 @@ const ProjectModal = ({
 
 // Populate form when editing existing project
   useEffect(() => {
-    if (project) {
+if (project) {
       setFormData({
-        name: project.Name || '',
+        Name: project.Name || '',
         description: project.description || '',
-        clientId: project.client_id || '',
+        client_id: project.client_id || '',
         status: project.status || 'planning',
         budget: project.budget || '',
-        startDate: project.start_date || '',
-        endDate: project.end_date || ''
+        start_date: project.start_date || '',
+        end_date: project.end_date || ''
       });
     } else {
       setFormData({
-        name: '',
+        Name: '',
         description: '',
-        clientId: '',
+        client_id: '',
         status: 'planning',
         budget: '',
-        startDate: '',
-        endDate: ''
+        start_date: '',
+        end_date: ''
       });
     }
     setErrors({});
@@ -91,26 +91,26 @@ const ProjectModal = ({
     }
   };
 
-  const validateForm = () => {
+const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Project name is required';
+    if (!formData.Name.trim()) {
+      newErrors.Name = 'Project name is required';
     }
 
-    if (!formData.clientId) {
-      newErrors.clientId = 'Client selection is required';
+    if (!formData.client_id) {
+      newErrors.client_id = 'Client selection is required';
     }
 
     if (formData.budget && isNaN(parseFloat(formData.budget))) {
       newErrors.budget = 'Budget must be a valid number';
     }
 
-    if (formData.startDate && formData.endDate) {
-      const start = new Date(formData.startDate);
-      const end = new Date(formData.endDate);
+    if (formData.start_date && formData.end_date) {
+      const start = new Date(formData.start_date);
+      const end = new Date(formData.end_date);
       if (end <= start) {
-        newErrors.endDate = 'End date must be after start date';
+        newErrors.end_date = 'End date must be after start date';
       }
     }
 
@@ -128,13 +128,13 @@ const ProjectModal = ({
 try {
       setLoading(true);
       
-      const projectData = {
-        Name: formData.name,
+const projectData = {
+        Name: formData.Name,
         status: formData.status,
         budget: formData.budget ? parseFloat(formData.budget) : null,
-        start_date: formData.startDate || null,
-        end_date: formData.endDate || null,
-        client_id: formData.clientId ? parseInt(formData.clientId) : null
+        start_date: formData.start_date || null,
+        end_date: formData.end_date || null,
+        client_id: formData.client_id ? parseInt(formData.client_id) : null
       };
       await onSubmit(projectData);
       onClose();
@@ -171,13 +171,13 @@ const getClientName = (clientId) => {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Project Name *
           </label>
-          <Input
-            name="name"
+<Input
+            name="Name"
             type="text"
-            value={formData.name}
+            value={formData.Name}
             onChange={handleInputChange}
             placeholder="Enter project name"
-            error={errors.name}
+            error={errors.Name}
             required
           />
         </div>
@@ -208,17 +208,17 @@ const getClientName = (clientId) => {
           {loadingClients ? (
             <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-12 rounded-lg"></div>
           ) : (
-            <select
-              name="clientId"
-              value={formData.clientId}
+<select
+              name="client_id"
+              value={formData.client_id}
               onChange={handleInputChange}
               className={`w-full px-4 py-3 border rounded-lg 
                         focus:ring-2 focus:ring-primary-500 focus:border-transparent
                         bg-white dark:bg-gray-700 text-gray-900 dark:text-white
-                        ${errors.clientId ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
+                        ${errors.client_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
               required
             >
-<option value="">Select a client</option>
+              <option value="">Select a client</option>
               {clients.map(client => (
                 <option key={client.Id} value={client.Id}>
                   {client.Name}
@@ -226,8 +226,8 @@ const getClientName = (clientId) => {
               ))}
             </select>
           )}
-          {errors.clientId && (
-            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.clientId}</p>
+{errors.client_id && (
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.client_id}</p>
           )}
         </div>
 
@@ -279,10 +279,10 @@ const getClientName = (clientId) => {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Start Date
             </label>
-            <Input
-              name="startDate"
+<Input
+              name="start_date"
               type="date"
-              value={formData.startDate}
+              value={formData.start_date}
               onChange={handleInputChange}
             />
           </div>
@@ -292,24 +292,24 @@ const getClientName = (clientId) => {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               End Date
             </label>
-            <Input
-              name="endDate"
+<Input
+              name="end_date"
               type="date"
-              value={formData.endDate}
+              value={formData.end_date}
               onChange={handleInputChange}
-              error={errors.endDate}
-              min={formData.startDate}
+              error={errors.end_date}
+              min={formData.start_date}
             />
           </div>
         </div>
 
         {/* Preview Selected Client */}
-        {formData.clientId && (
+{formData.client_id && (
           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Selected Client
             </h4>
-            <p className="text-gray-900 dark:text-white">{getClientName(formData.clientId)}</p>
+            <p className="text-gray-900 dark:text-white">{getClientName(formData.client_id)}</p>
           </div>
         )}
 
