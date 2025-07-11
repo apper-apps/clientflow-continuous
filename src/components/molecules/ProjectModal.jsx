@@ -35,17 +35,17 @@ const ProjectModal = ({
     }
   }, [isOpen]);
 
-  // Populate form when editing existing project
+// Populate form when editing existing project
   useEffect(() => {
     if (project) {
       setFormData({
-        name: project.name || '',
+        name: project.Name || '',
         description: project.description || '',
-        clientId: project.clientId || '',
+        clientId: project.client_id || '',
         status: project.status || 'planning',
         budget: project.budget || '',
-        startDate: project.startDate || '',
-        endDate: project.endDate || ''
+        startDate: project.start_date || '',
+        endDate: project.end_date || ''
       });
     } else {
       setFormData({
@@ -154,7 +154,7 @@ const ProjectModal = ({
 
 const getClientName = (clientId) => {
     const client = clients.find(c => c.Id === parseInt(clientId));
-    return client ? client.name : 'Unknown Client';
+    return client ? client.Name : 'Unknown Client';
   };
 
   return (
@@ -220,7 +220,7 @@ const getClientName = (clientId) => {
 <option value="">Select a client</option>
               {clients.map(client => (
                 <option key={client.Id} value={client.Id}>
-                  {client.name}
+                  {client.Name}
                 </option>
               ))}
             </select>
