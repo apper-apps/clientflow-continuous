@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import KanbanBoard from "@/components/organisms/KanbanBoard";
 import ApperIcon from "@/components/ApperIcon";
+import KanbanBoard from "@/components/organisms/KanbanBoard";
 import Badge from "@/components/atoms/Badge";
 import Button from "@/components/atoms/Button";
 import Card from "@/components/atoms/Card";
@@ -10,8 +10,8 @@ import Empty from "@/components/ui/Empty";
 import Error from "@/components/ui/Error";
 import Loading from "@/components/ui/Loading";
 import SearchBar from "@/components/molecules/SearchBar";
-import { getAllTasks } from "@/services/api/taskService";
 import { startTimer, stopTimer } from "@/services/api/timeTrackingService";
+import { getAllTasks } from "@/services/api/taskService";
 
 const Tasks = () => {
 const [tasks, setTasks] = useState([]);
@@ -319,9 +319,9 @@ const getStatusIcon = (status) => {
                           }`}>
                             {task.title}
                           </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Project ID: {task.projectId}
-                          </p>
+<p className="text-sm text-gray-600 dark:text-gray-400">
+                        Project ID: {task.project_id}
+                      </p>
                         </div>
                         
                         <div className="flex items-center gap-2">
@@ -346,15 +346,14 @@ const getStatusIcon = (status) => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                           <div className="flex items-center gap-1">
-                            <ApperIcon name="Calendar" size={14} />
-                            <span>Due: {new Date(task.dueDate).toLocaleDateString()}</span>
+<span>Due: {new Date(task.due_date).toLocaleDateString()}</span>
                           </div>
-                          
-                          {new Date(task.dueDate) < new Date() && task.status !== "done" && (
+{new Date(task.due_date) < new Date() && task.status !== "done" && (
                             <Badge variant="danger" className="text-xs">
                               Overdue
                             </Badge>
                           )}
+                        </div>
                         </div>
                         
 <div className="flex items-center gap-2">
@@ -408,13 +407,13 @@ const getStatusIcon = (status) => {
                             size={14} 
                           />
                           {activeTimers.has(task.Id) ? "Stop" : "Start"}
+{activeTimers.has(task.Id) ? "Stop" : "Start"}
                         </Button>
                       </div>
                     </div>
                   </div>
                 </Card>
               </motion.div>
-            ))}
           </motion.div>
 
           {filteredTasks.length === 0 && (searchTerm || priorityFilter !== "all" || statusFilter !== "all") && (

@@ -44,12 +44,12 @@ const [statusFilter, setStatusFilter] = useState("all");
     loadInvoices();
   }, []);
 
-  const filteredInvoices = invoices.filter(invoice => {
+const filteredInvoices = invoices.filter(invoice => {
     const matchesSearch = invoice.Id.toString().includes(searchTerm) ||
                          invoice.amount.toString().includes(searchTerm);
     const matchesStatus = statusFilter === "all" || invoice.status === statusFilter;
     return matchesSearch && matchesStatus;
-});
+  });
 
   const calculateOutstandingAmount = () => {
     return invoices
@@ -293,11 +293,11 @@ return (
                       {invoice.status}
                     </Badge>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Client ID: {invoice.clientId}
+<p className="text-sm text-gray-600 dark:text-gray-400">
+                    Client ID: {invoice.client_id}
                   </p>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Project ID: {invoice.projectId}
+                    Project ID: {invoice.project_id}
                   </p>
                 </div>
               </div>
@@ -311,21 +311,21 @@ return (
                 </div>
                 
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Due Date:</span>
+<span className="text-gray-600 dark:text-gray-400">Due Date:</span>
                   <span className={`font-medium ${
-                    new Date(invoice.dueDate) < new Date() && invoice.status !== "paid"
+                    new Date(invoice.due_date) < new Date() && invoice.status !== "paid"
                       ? "text-red-600 dark:text-red-400"
                       : "text-gray-900 dark:text-white"
                   }`}>
-                    {new Date(invoice.dueDate).toLocaleDateString()}
+                    {new Date(invoice.due_date).toLocaleDateString()}
                   </span>
                 </div>
                 
-                {new Date(invoice.dueDate) < new Date() && invoice.status !== "paid" && (
+{new Date(invoice.due_date) < new Date() && invoice.status !== "paid" && (
                   <div className="flex items-center gap-2 p-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
                     <ApperIcon name="AlertTriangle" size={14} className="text-red-600 dark:text-red-400" />
                     <span className="text-xs text-red-600 dark:text-red-400 font-medium">
-                      {Math.floor((new Date() - new Date(invoice.dueDate)) / (1000 * 60 * 60 * 24))} days overdue
+                      {Math.floor((new Date() - new Date(invoice.due_date)) / (1000 * 60 * 60 * 24))} days overdue
                     </span>
                   </div>
                 )}

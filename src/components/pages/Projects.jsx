@@ -77,8 +77,8 @@ const [isModalOpen, setIsModalOpen] = useState(false);
   };
 
 const getClientName = (clientId) => {
-    const client = clients.find(c => c.Id === clientId);
-    return client ? client.name : `Client ID: ${clientId}`;
+    const client = clients.find(c => c.Id === parseInt(clientId));
+    return client ? client.Name : `Client ID: ${clientId}`;
   };
 
   const filteredProjects = projects.filter(project => {
@@ -217,11 +217,11 @@ actionLabel="Create Project"
             <Card hover className="p-6 h-full">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 dark:text-white truncate mb-1">
-                    {project.name}
+<h3 className="font-semibold text-gray-900 dark:text-white truncate mb-1">
+                    {project.Name}
                   </h3>
 <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {getClientName(project.clientId)}
+                    {getClientName(project.client_id)}
                   </p>
                 </div>
                 
@@ -239,17 +239,17 @@ actionLabel="Create Project"
                   </span>
                 </div>
                 
-                <div className="flex items-center justify-between text-sm">
+<div className="flex items-center justify-between text-sm">
                   <span className="text-gray-600 dark:text-gray-400">Start Date:</span>
                   <span className="text-gray-900 dark:text-white">
-                    {new Date(project.startDate).toLocaleDateString()}
+                    {new Date(project.start_date).toLocaleDateString()}
                   </span>
                 </div>
                 
-                <div className="flex items-center justify-between text-sm">
+<div className="flex items-center justify-between text-sm">
                   <span className="text-gray-600 dark:text-gray-400">End Date:</span>
                   <span className="text-gray-900 dark:text-white">
-                    {new Date(project.endDate).toLocaleDateString()}
+                    {new Date(project.end_date).toLocaleDateString()}
                   </span>
                 </div>
                 

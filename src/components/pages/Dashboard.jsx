@@ -18,7 +18,7 @@ const Dashboard = () => {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      setError("");
+setError("");
       const dashboardData = await getDashboardData();
       setData(dashboardData);
     } catch (err) {
