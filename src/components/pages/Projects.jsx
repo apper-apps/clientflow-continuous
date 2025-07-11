@@ -81,10 +81,10 @@ const handleProjectSubmit = async (projectData) => {
 const getClientName = (clientId) => {
     const client = clients.find(c => c.Id === parseInt(clientId));
     return client?.Name || `Client ID: ${clientId}`;
-  };
+};
 
   const filteredProjects = projects.filter(project => {
-    const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = project.Name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === "all" || project.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
