@@ -1,3 +1,5 @@
+import { getAllProjects } from './projectService';
+
 export const getAllTasks = async () => {
   try {
     const { ApperClient } = window.ApperSDK;

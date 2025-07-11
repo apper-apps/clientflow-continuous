@@ -10,11 +10,12 @@ import Empty from "@/components/ui/Empty";
 import Error from "@/components/ui/Error";
 import Loading from "@/components/ui/Loading";
 import SearchBar from "@/components/molecules/SearchBar";
+import TaskModal from "@/components/molecules/TaskModal";
 import { startTimer, stopTimer } from "@/services/api/timeTrackingService";
 import { getAllTasks } from "@/services/api/taskService";
 
 const Tasks = () => {
-const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,7 +24,8 @@ const [tasks, setTasks] = useState([]);
   const [viewMode, setViewMode] = useState("list");
   const [activeTimers, setActiveTimers] = useState(new Map());
   const [currentTime, setCurrentTime] = useState(Date.now());
-  const loadTasks = async () => {
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+const loadTasks = async () => {
     try {
       setLoading(true);
       setError("");
@@ -35,7 +37,12 @@ const [tasks, setTasks] = useState([]);
     } finally {
       setLoading(false);
     }
-};
+  };
+
+  const handleTaskCreated = (newTask) => {
+    setTasks(prevTasks => [...prevTasks, newTask]);
+    setIsTaskModalOpen(false);
+  };
 
   useEffect(() => {
     loadTasks();
@@ -161,13 +168,13 @@ const getStatusIcon = (status) => {
   }
 
   if (tasks.length === 0) {
-    return (
+return (
       <Empty
         title="No Tasks Yet"
         description="Create your first task to start tracking your work"
         icon="CheckSquare"
         actionLabel="Add Task"
-        onAction={() => toast.info("Add task functionality coming soon!")}
+        onAction={() => setIsTaskModalOpen(true)}
       />
     );
   }
@@ -217,7 +224,7 @@ const getStatusIcon = (status) => {
 </div>
           <Button 
             variant="primary"
-            onClick={() => toast.info("Task creation will be available soon. For now, tasks are managed through projects.")}
+            onClick={() => setIsTaskModalOpen(true)}
           >
             <ApperIcon name="Plus" size={16} className="mr-2" />
             Add Task
@@ -435,7 +442,14 @@ const getStatusIcon = (status) => {
             </motion.div>
 )}
         </>
-      )}
+)}
+
+      {/* Task Modal */}
+      <TaskModal
+        isOpen={isTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
+        onTaskCreated={handleTaskCreated}
+      />
     </div>
   );
 };
