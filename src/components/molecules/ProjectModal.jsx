@@ -11,7 +11,8 @@ const ProjectModal = ({
   onClose, 
   onSubmit, 
   project = null,
-  title = "Create New Project"
+  title = "Create New Project",
+  clients = []
 }) => {
 const [formData, setFormData] = useState({
     Name: '',
@@ -23,17 +24,8 @@ const [formData, setFormData] = useState({
     end_date: ''
   });
   
-  const [clients, setClients] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingClients, setLoadingClients] = useState(false);
+const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-
-  // Load clients when modal opens
-  useEffect(() => {
-    if (isOpen) {
-      loadClients();
-    }
-  }, [isOpen]);
 
 // Populate form when editing existing project
   useEffect(() => {
@@ -61,19 +53,6 @@ if (project) {
     setErrors({});
   }, [project]);
 
-  const loadClients = async () => {
-    try {
-      setLoadingClients(true);
-      const clientsData = await getAllClients();
-      setClients(clientsData || []);
-    } catch (error) {
-      console.error('Failed to load clients:', error);
-      toast.error('Failed to load clients');
-      setClients([]);
-    } finally {
-      setLoadingClients(false);
-    }
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -205,8 +184,10 @@ const getClientName = (clientId) => {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Client *
           </label>
-          {loadingClients ? (
-            <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-12 rounded-lg"></div>
+{clients.length === 0 ? (
+            <div className="text-sm text-gray-500 dark:text-gray-400 p-3 border rounded-lg">
+              No clients available. Please add clients first.
+            </div>
           ) : (
 <select
               name="client_id"
@@ -224,7 +205,7 @@ const getClientName = (clientId) => {
                   {client.Name}
                 </option>
               ))}
-            </select>
+</select>
           )}
 {errors.client_id && (
             <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.client_id}</p>
