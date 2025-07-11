@@ -146,10 +146,11 @@ const handleNewInvoiceClick = () => {
     setEditingInvoice(null);
   };
 
-  const handleInvoiceSubmit = async (invoiceData) => {
+const handleInvoiceSubmit = async (invoiceData) => {
     try {
       if (editingInvoice) {
-        // Handle invoice update logic here
+        const { updateInvoice } = await import("@/services/api/invoiceService");
+        await updateInvoice(editingInvoice.Id, invoiceData);
         await loadInvoices();
         toast.success("Invoice updated successfully");
       } else {

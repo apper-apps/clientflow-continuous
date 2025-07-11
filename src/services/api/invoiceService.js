@@ -70,15 +70,15 @@ export const createInvoice = async (invoiceData) => {
       apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
     });
     
-    const params = {
+const params = {
       records: [{
         Name: `Invoice-${Date.now()}`,
         amount: parseFloat(invoiceData.amount),
         status: invoiceData.status || "draft",
-        due_date: invoiceData.dueDate,
-        payment_date: invoiceData.paymentDate || null,
-        client_id: invoiceData.clientId ? parseInt(invoiceData.clientId) : null,
-        project_id: invoiceData.projectId ? parseInt(invoiceData.projectId) : null
+        due_date: invoiceData.due_date,
+        payment_date: invoiceData.payment_date || null,
+        client_id: invoiceData.client_id ? parseInt(invoiceData.client_id) : null,
+        project_id: invoiceData.project_id ? parseInt(invoiceData.project_id) : null
       }]
     };
     
@@ -112,15 +112,15 @@ export const updateInvoice = async (id, invoiceData) => {
       apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
     });
     
-    const params = {
+const params = {
       records: [{
         Id: parseInt(id),
         amount: invoiceData.amount ? parseFloat(invoiceData.amount) : undefined,
         status: invoiceData.status,
-        due_date: invoiceData.dueDate,
-        payment_date: invoiceData.paymentDate || null,
-        client_id: invoiceData.clientId ? parseInt(invoiceData.clientId) : undefined,
-        project_id: invoiceData.projectId ? parseInt(invoiceData.projectId) : undefined
+        due_date: invoiceData.due_date,
+        payment_date: invoiceData.payment_date || null,
+        client_id: invoiceData.client_id ? parseInt(invoiceData.client_id) : undefined,
+        project_id: invoiceData.project_id ? parseInt(invoiceData.project_id) : undefined
       }]
     };
     

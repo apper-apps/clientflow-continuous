@@ -6,36 +6,42 @@ import Input from "@/components/atoms/Input";
 import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
 import { getAllProjects } from "@/services/api/projectService";
-
+import { getAllClients } from "@/services/api/clientService";
 const InvoiceModal = ({ isOpen, onClose, onSubmit, initialData = null }) => {
   const [projects, setProjects] = useState([]);
+  const [clients, setClients] = useState([]);
   const [loadingProjects, setLoadingProjects] = useState(false);
-const [formData, setFormData] = useState({
-    projectId: '',
-    dueDate: '',
+  const [loadingClients, setLoadingClients] = useState(false);
+  const [formData, setFormData] = useState({
+    project_id: '',
+    client_id: '',
+    due_date: '',
     status: 'draft',
-    paymentDate: '',
+    payment_date: '',
     lineItems: [{ description: '', amount: 0 }]
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  useEffect(() => {
+useEffect(() => {
     if (isOpen) {
       loadProjects();
+      loadClients();
       if (initialData) {
-setFormData({
-          projectId: initialData.projectId || '',
-          dueDate: initialData.dueDate ? initialData.dueDate.split('T')[0] : '',
+        setFormData({
+          project_id: initialData.project_id || '',
+          client_id: initialData.client_id || '',
+          due_date: initialData.due_date ? initialData.due_date.split('T')[0] : '',
           status: initialData.status || 'draft',
-          paymentDate: initialData.paymentDate ? initialData.paymentDate.split('T')[0] : '',
+          payment_date: initialData.payment_date ? initialData.payment_date.split('T')[0] : '',
           lineItems: initialData.lineItems || [{ description: '', amount: 0 }]
         });
       } else {
         setFormData({
-          projectId: '',
-          dueDate: '',
+          project_id: '',
+          client_id: '',
+          due_date: '',
           status: 'draft',
-          paymentDate: '',
+          payment_date: '',
           lineItems: [{ description: '', amount: 0 }]
         });
       }
@@ -43,7 +49,7 @@ setFormData({
     }
   }, [isOpen, initialData]);
 
-  const loadProjects = async () => {
+const loadProjects = async () => {
     try {
       setLoadingProjects(true);
       const projectsData = await getAllProjects();
@@ -52,6 +58,18 @@ setFormData({
       toast.error("Failed to load projects");
     } finally {
       setLoadingProjects(false);
+    }
+  };
+
+  const loadClients = async () => {
+    try {
+      setLoadingClients(true);
+      const clientsData = await getAllClients();
+      setClients(clientsData);
+    } catch (error) {
+      toast.error("Failed to load clients");
+    } finally {
+      setLoadingClients(false);
     }
   };
 
@@ -101,31 +119,35 @@ setFormData({
     return formData.lineItems.reduce((total, item) => total + (item.amount || 0), 0);
   };
 
-  const getProjectName = (projectId) => {
+const getProjectName = (projectId) => {
     const project = projects.find(p => p.Id === parseInt(projectId));
-    return project ? project.name : 'Unknown Project';
+    return project ? project.Name : 'Unknown Project';
   };
 
-  const getProjectClientId = (projectId) => {
-    const project = projects.find(p => p.Id === parseInt(projectId));
-    return project ? project.clientId : '';
+  const getClientName = (clientId) => {
+    const client = clients.find(c => c.Id === parseInt(clientId));
+    return client ? client.Name : 'Unknown Client';
   };
 
-  const validateForm = () => {
+const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.projectId) {
-      newErrors.projectId = 'Project is required';
+    if (!formData.client_id) {
+      newErrors.client_id = 'Client is required';
     }
 
-    if (!formData.dueDate) {
-      newErrors.dueDate = 'Due date is required';
+    if (!formData.project_id) {
+      newErrors.project_id = 'Project is required';
+    }
+
+    if (!formData.due_date) {
+      newErrors.due_date = 'Due date is required';
     } else {
-      const selectedDate = new Date(formData.dueDate);
+      const selectedDate = new Date(formData.due_date);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (selectedDate < today) {
-        newErrors.dueDate = 'Due date cannot be in the past';
+        newErrors.due_date = 'Due date cannot be in the past';
       }
     }
 
@@ -162,9 +184,9 @@ setFormData({
 try {
       const total = calculateTotal();
       const invoiceData = {
-        projectId: parseInt(formData.projectId),
-        clientId: getProjectClientId(formData.projectId),
-        dueDate: new Date(formData.dueDate).toISOString(),
+        project_id: parseInt(formData.project_id),
+        client_id: parseInt(formData.client_id),
+        due_date: new Date(formData.due_date).toISOString(),
         status: formData.status,
         amount: total,
         lineItems: formData.lineItems.filter(item => 
@@ -173,8 +195,8 @@ try {
       };
 
       // Add payment date if status is paid
-      if (formData.status === 'paid' && formData.paymentDate) {
-        invoiceData.paymentDate = new Date(formData.paymentDate).toISOString();
+      if (formData.status === 'paid' && formData.payment_date) {
+        invoiceData.payment_date = new Date(formData.payment_date).toISOString();
       }
 
       await onSubmit(invoiceData);
@@ -195,14 +217,38 @@ try {
       size="xl"
     >
       <form onSubmit={handleSubmit} className="space-y-6">
+{/* Client Selection */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Client *
+          </label>
+          <select
+            name="client_id"
+            value={formData.client_id}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+            disabled={loadingClients}
+          >
+            <option value="">Select a client</option>
+            {clients.map(client => (
+              <option key={client.Id} value={client.Id}>
+                {client.Name} - {client.email}
+              </option>
+            ))}
+          </select>
+          {errors.client_id && (
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.client_id}</p>
+          )}
+        </div>
+
         {/* Project Selection */}
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Project *
           </label>
           <select
-            name="projectId"
-            value={formData.projectId}
+            name="project_id"
+            value={formData.project_id}
             onChange={handleInputChange}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             disabled={loadingProjects}
@@ -210,12 +256,12 @@ try {
             <option value="">Select a project</option>
             {projects.map(project => (
               <option key={project.Id} value={project.Id}>
-                {project.name} - Client ID: {project.clientId}
+                {project.Name}
               </option>
             ))}
           </select>
-          {errors.projectId && (
-            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.projectId}</p>
+          {errors.project_id && (
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.project_id}</p>
           )}
         </div>
 
@@ -224,15 +270,15 @@ try {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Due Date *
           </label>
-          <Input
+<Input
             type="date"
-            name="dueDate"
-            value={formData.dueDate}
+            name="due_date"
+            value={formData.due_date}
             onChange={handleInputChange}
             className="w-full"
           />
-          {errors.dueDate && (
-            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.dueDate}</p>
+          {errors.due_date && (
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.due_date}</p>
           )}
         </div>
 
@@ -260,10 +306,10 @@ try {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Payment Date
             </label>
-            <Input
+<Input
               type="date"
-              name="paymentDate"
-              value={formData.paymentDate}
+              name="payment_date"
+              value={formData.payment_date}
               onChange={handleInputChange}
               className="w-full"
               max={new Date().toISOString().split('T')[0]}
