@@ -136,7 +136,6 @@ try {
         end_date: formData.endDate || null,
         client_id: formData.clientId ? parseInt(formData.clientId) : null
       };
-
       await onSubmit(projectData);
       onClose();
     } catch (error) {

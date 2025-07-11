@@ -68,14 +68,14 @@ export const createProject = async (projectData) => {
       apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
     });
     
-    const params = {
+const params = {
       records: [{
-        Name: projectData.name,
+        Name: projectData.Name,
         status: projectData.status || "planning",
         budget: projectData.budget ? parseFloat(projectData.budget) : null,
-        start_date: projectData.startDate || null,
-        end_date: projectData.endDate || null,
-        client_id: projectData.clientId ? parseInt(projectData.clientId) : null
+        start_date: projectData.start_date || null,
+        end_date: projectData.end_date || null,
+        client_id: projectData.client_id ? parseInt(projectData.client_id) : null
       }]
     };
     
@@ -109,15 +109,15 @@ export const updateProject = async (id, projectData) => {
       apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
     });
     
-    const params = {
+const params = {
       records: [{
         Id: parseInt(id),
-        Name: projectData.name,
+        Name: projectData.Name,
         status: projectData.status,
         budget: projectData.budget ? parseFloat(projectData.budget) : null,
-        start_date: projectData.startDate || null,
-        end_date: projectData.endDate || null,
-        client_id: projectData.clientId ? parseInt(projectData.clientId) : null
+        start_date: projectData.start_date || null,
+        end_date: projectData.end_date || null,
+        client_id: projectData.client_id ? parseInt(projectData.client_id) : null
       }]
     };
     
