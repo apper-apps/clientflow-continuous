@@ -311,7 +311,7 @@ const getStatusIcon = (status) => {
                       </button>
                     </div>
                     
-                    <div className="flex-1 min-w-0">
+<div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-4 mb-3">
                         <div className="flex-1">
                           <h3 className={`font-semibold text-gray-900 dark:text-white mb-1 ${
@@ -319,9 +319,9 @@ const getStatusIcon = (status) => {
                           }`}>
                             {task.title}
                           </h3>
-<p className="text-sm text-gray-600 dark:text-gray-400">
-                        Project ID: {task.project_id}
-                      </p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Project ID: {task.project_id}
+                          </p>
                         </div>
                         
                         <div className="flex items-center gap-2">
