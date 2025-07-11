@@ -143,7 +143,7 @@ const validateForm = () => {
     if (!formData.due_date) {
       newErrors.due_date = 'Due date is required';
     } else {
-      const selectedDate = new Date(formData.due_date);
+      const selectedDate = new Date(formData.due_date + 'T00:00:00');
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (selectedDate < today) {
@@ -151,19 +151,21 @@ const validateForm = () => {
       }
     }
 
-    // Validate line items
-    const hasValidLineItems = formData.lineItems.some(item => 
-      item.description.trim() && item.amount > 0
+    // Validate line items - check if at least one item has both description and amount
+    const validLineItems = formData.lineItems.filter(item => 
+      item.description && item.description.trim() && item.amount > 0
     );
-    if (!hasValidLineItems) {
+    
+    if (validLineItems.length === 0) {
       newErrors.lineItems = 'At least one line item with description and amount is required';
     }
 
+    // Validate individual line items
     formData.lineItems.forEach((item, index) => {
-      if (item.description.trim() && item.amount <= 0) {
+      if (item.description && item.description.trim() && item.amount <= 0) {
         newErrors[`lineItem_${index}_amount`] = 'Amount must be greater than 0';
       }
-      if (item.amount > 0 && !item.description.trim()) {
+      if (item.amount > 0 && (!item.description || !item.description.trim())) {
         newErrors[`lineItem_${index}_description`] = 'Description is required';
       }
     });
