@@ -319,8 +319,8 @@ const getStatusIcon = (status) => {
                           }`}>
                             {task.title}
                           </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Project ID: {task.project_id}
+<p className="text-sm text-gray-600 dark:text-gray-400">
+                            Project ID: {task.project_id || 'N/A'}
                           </p>
                         </div>
                         
