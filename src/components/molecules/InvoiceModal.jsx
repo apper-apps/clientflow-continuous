@@ -201,9 +201,8 @@ try {
         invoiceData.payment_date = new Date(formData.payment_date).toISOString();
       }
 
-      await onSubmit(invoiceData);
+await onSubmit(invoiceData);
       onClose();
-      toast.success(initialData ? "Invoice updated successfully!" : "Invoice created successfully!");
     } catch (error) {
       toast.error("Failed to save invoice. Please try again.");
     } finally {

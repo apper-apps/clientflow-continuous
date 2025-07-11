@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 import Card from "@/components/atoms/Card";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 import ProjectModal from "@/components/molecules/ProjectModal";
 import ClientModal from "@/components/molecules/ClientModal";
 import InvoiceModal from "@/components/molecules/InvoiceModal";
+import { createInvoice } from "@/services/api/invoiceService";
+
 const QuickActions = () => {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isClientModalOpen, setIsClientModalOpen] = useState(false);
@@ -22,10 +25,15 @@ const QuickActions = () => {
   };
 
   const handleInvoiceSubmit = async (invoiceData) => {
-    // Modal handles the submission and toast notifications
-    setIsInvoiceModalOpen(false);
+    try {
+      await createInvoice(invoiceData);
+      setIsInvoiceModalOpen(false);
+      toast.success("Invoice created successfully!");
+    } catch (error) {
+      toast.error("Failed to create invoice. Please try again.");
+      throw error;
+    }
   };
-
   const handleActionClick = (actionTitle) => {
     switch (actionTitle) {
       case "New Project":
