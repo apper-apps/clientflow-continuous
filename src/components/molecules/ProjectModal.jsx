@@ -125,18 +125,20 @@ const ProjectModal = ({
       return;
     }
 
-    try {
+try {
       setLoading(true);
       
       const projectData = {
-        ...formData,
+        Name: formData.name,
+        status: formData.status,
         budget: formData.budget ? parseFloat(formData.budget) : null,
-        id: project?.id
+        start_date: formData.startDate || null,
+        end_date: formData.endDate || null,
+        client_id: formData.clientId ? parseInt(formData.clientId) : null
       };
 
       await onSubmit(projectData);
       onClose();
-      toast.success(project ? 'Project updated successfully' : 'Project created successfully');
     } catch (error) {
       console.error('Failed to save project:', error);
       toast.error(error.message || 'Failed to save project');
