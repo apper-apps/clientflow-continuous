@@ -404,16 +404,16 @@ const getStatusIcon = (status) => {
                         >
                           <ApperIcon 
                             name={activeTimers.has(task.Id) ? "Square" : "Play"} 
-                            size={14} 
+size={14} 
                           />
                           {activeTimers.has(task.Id) ? "Stop" : "Start"}
-{activeTimers.has(task.Id) ? "Stop" : "Start"}
-                        </Button>
+</Button>
                       </div>
                     </div>
                   </div>
                 </Card>
               </motion.div>
+            ))}
           </motion.div>
 
           {filteredTasks.length === 0 && (searchTerm || priorityFilter !== "all" || statusFilter !== "all") && (
